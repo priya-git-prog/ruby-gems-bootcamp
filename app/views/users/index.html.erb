@@ -1,0 +1,5 @@
+<div class="row">
+  <% @users.each do |user| %>
+    <%= render 'users/user', user: user %>
+  <% end %>
+</div>

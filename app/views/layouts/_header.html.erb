@@ -27,6 +27,12 @@
               New Course
             <% end %>
           </li>
+          <li class="nav-item">
+            <%= link_to users_path, class: "nav-link #{'active fw-bold' if current_page?(users_path)}" do %>
+              <div class="fa fa-users"></div>
+              Users
+            <% end %>
+          </li>
           <div class="form-inline my-2 my-lg-0">
             <%= form_tag(courses_path, method: :get) do %>
               <div class="input-group">

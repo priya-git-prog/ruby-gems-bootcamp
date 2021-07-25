@@ -6,7 +6,7 @@ class Course < ApplicationRecord
   belongs_to :user
   has_rich_text :description
 
-  validates_presence_of :title
+  validates_presence_of :title, :short_description, :language, :level, :price
   validates :description, presence: true, length: { minimum: 5 }
 
   # When we have sensitive info like transactions (http://localhost:3000/courses/eb3c097c)

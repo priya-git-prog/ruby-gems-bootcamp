@@ -1,5 +1,8 @@
 class Course < ApplicationRecord
   extend FriendlyId
+  include PublicActivity::Model
+
+  tracked owner: Proc.new { |controller, model| controller.current_user }
   friendly_id :title, use: :slugged
   # friendly_id :generated_slug, use: :slugged
 

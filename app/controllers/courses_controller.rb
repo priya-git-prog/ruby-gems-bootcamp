@@ -11,8 +11,12 @@ class CoursesController < ApplicationController
       # @q = Course.ransack(params[:q])
       # @courses = @q.result.includes(:user)
     # end
-    @ransack_courses = set_global_variables
-    @courses = @ransack_courses.result.includes(:user)
+    # if current_user.has_role?(:admin)
+      @ransack_courses = set_global_variables
+      @courses = @ransack_courses.result.includes(:user)
+    # else
+      # redirect_to root_path, alert: 'You do not have access'
+    # end
   end
 
   # GET /courses/1 or /courses/1.json

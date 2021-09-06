@@ -37,5 +37,13 @@
         <span class="badge alert-danger">No</span>
       <% end %>
     </div>
+    <div class="card-footer">
+      <% user.roles.each do |role| %>
+        <div class="badge alert-info">
+          <%= role.name %>
+        </div>
+      <% end %>
+      <%= link_to 'Edit role', edit_user_path(user), class: 'btn btn-sm btn-warning' %>
+    </div>
   </div>
 </div>

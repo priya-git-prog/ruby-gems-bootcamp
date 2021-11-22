@@ -1,8 +1,8 @@
 <div class="col-sm-4 mb-2">
   <div class="card">
     <div class="card-header">
-      <i class="fas fa-graduation-cap"></i>
-      <%= link_to course.title, courses_path(course) %>
+      <i class="fa fa-graduation-cap"></i>
+      <%= link_to course.title, course_path(course) %>
     </div>
     <div class="card-body">
       <small><%= simple_format(course.short_description) %></small>
@@ -15,12 +15,12 @@
     <div class="card-footer">
       <div class="row">
         <div class="col-md-6">
-          <i class="fas fa-language"></i>
+          <i class="fa fa-language"></i>
           <%= course.language %>
         </div>
         <div class="col-md-6">
           <div class="text-right">
-            <i class="fas fa-signal"></i>
+            <i class="fa fa-signal"></i>
             <%= course.level %>
           </div>
         </div>
@@ -29,25 +29,27 @@
     <div class="card-footer">
       <div class="row">
         <div class="col-md-6">
-          <i class="fas fa-clock"></i>
+          <i class="fa fa-clock"></i>
           <%= course.created_at.strftime('%d-%b-%Y') %>
         </div>
         <div class="col-md-6">
           <div class="text-right">
-            <i class="fas fa-chalkboard-teacher"></i>
+            <i class="fa fa-chalkboard-teacher"></i>
             <%= course.user.username %>
           </div>
         </div>
       </div>
     </div>
-    <% if policy(course).edit? %>
-      <div class="card-footer">
-        <%#= link_to 'Show', course, class: 'btn btn-sm btn-primary' %>
-        <!-- if policy(course).edit? -->
-        <%= link_to 'Edit', edit_course_path(course), class: 'btn btn-sm btn-warning' %>
-        <!-- if policy(course).destroy? -->
-        <%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
-      </div>
+    <% if current_user %>
+      <% if policy(course).edit? %>
+        <div class="card-footer">
+          <%#= link_to 'Show', course, class: 'btn btn-sm btn-primary' %>
+          <!-- if policy(course).edit? -->
+          <%= link_to 'Edit', edit_course_path(course), class: 'btn btn-sm btn-warning' %>
+          <!-- if policy(course).destroy? -->
+          <%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>

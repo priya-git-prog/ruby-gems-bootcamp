@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :courses
   after_create :assign_default_role
 
+  validate :must_have_a_role, on: :update
+
   def to_s
     email
   end
@@ -25,6 +27,14 @@ class User < ApplicationRecord
     else
       add_role(:student) if roles.blank?
       add_role(:teacher) # if you want any user to be able to create own courses
+    end
+  end
+
+  private
+
+  def must_have_a_role
+    unless roles.any?
+      errors.add(:roles, "must have atleast one role")
     end
   end
 end

@@ -22,7 +22,7 @@
             <% end %>
           </li>
           <li class="nav-item">
-            <%= link_to new_course_path, class: "nav-link #{'active fw-bold' if current_page?(courses_path)}" do %>
+            <%= link_to new_course_path, class: "nav-link #{'active fw-bold' if current_page?(new_course_path)}" do %>
               <div class="fa fa-plus"></div>
               New Course
             <% end %>

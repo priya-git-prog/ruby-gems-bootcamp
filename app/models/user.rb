@@ -1,9 +1,12 @@
 class User < ApplicationRecord
   rolify
+  extend FriendlyId
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :trackable, :confirmable
+
+  friendly_id :email, use: :slugged
 
   has_many :courses
   after_create :assign_default_role

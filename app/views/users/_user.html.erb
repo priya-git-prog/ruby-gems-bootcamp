@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-header">
       <i class="fas fa-user"></i>
-      <%= user.email %>
+      <%= link_to user.email, user_path(user) %>
     </div>
     <div class="card-footer">
       Signed Up <%= time_ago_in_words(user.created_at) %> ago

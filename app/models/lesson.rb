@@ -7,6 +7,8 @@ class Lesson < ApplicationRecord
 
   belongs_to :course
 
+  has_rich_text :content
+
   validates_presence_of :title, :content, :course
 
   def to_s

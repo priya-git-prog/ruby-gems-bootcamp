@@ -7,8 +7,8 @@ class Course < ApplicationRecord
   # friendly_id :generated_slug, use: :slugged
 
   belongs_to :user
-  has_rich_text :description
   has_many :lessons, dependent: :destroy
+  has_rich_text :description
 
   validates_presence_of :title, :short_description, :language, :level, :price
   validates :description, presence: true, length: { minimum: 5 }

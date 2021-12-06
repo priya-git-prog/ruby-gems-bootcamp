@@ -12,6 +12,11 @@
         <%= number_to_currency(course.price, unit: "₹") %>
       </div>
     </div>
+     <div class="card-footer">
+      <div class="fa fa-book">
+        <%= course.lessons.count %>
+      </div>
+    </div>
     <div class="card-footer">
       <div class="row">
         <div class="col-md-6">

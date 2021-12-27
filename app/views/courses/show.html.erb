@@ -8,7 +8,8 @@
     <%= render 'courses/course', course: @course %>
   <!-- </div> -->
   <div class="col">
-    <%= link_to 'Add lessons', new_lesson_path(course_id: @course.id) %>
+    <%= link_to 'Add lesson', new_course_lesson_path(@course, @lesson), class: 'btn btn-sm btn-primary' %>
+    <p></p>
     <% @lessons.each do |lesson| %>
       <%= render 'lessons/lesson', lesson: lesson %>
     <% end %>

@@ -20,7 +20,9 @@ class CoursesController < ApplicationController
     # end
 
     @ransack_courses = set_global_variables
-    @courses = @ransack_courses.result.includes(:user)
+    # @courses = @ransack_courses.result.includes(:user)
+
+    @pagy, @courses = pagy(@ransack_courses.result.includes(:user))
   end
 
   # GET /courses/1 or /courses/1.json

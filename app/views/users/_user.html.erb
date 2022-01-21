@@ -3,9 +3,9 @@
     <div class="card-header">
       <i class="fa fa-user"></i>
       <% if user.online? %>
-        <i class="fa fa-circle text-success"></i>
+        <i class="far fa-circle text-success"></i>
       <% else %>
-        <i class="fa fa-circle text-danger"></i>
+        <i class="far fa-circle text-danger"></i>
       <% end %>
       <%= link_to user.email, user_path(user) %>
     </div>

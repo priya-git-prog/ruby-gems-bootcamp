@@ -1,0 +1,89 @@
+<% content_for :title do %>
+  Corsego | All Users
+<% end %>
+
+<h3>
+  <div class="text-center">
+    Users
+    <div class="badge alert-info">
+      <%= @users.count %>
+    </div>
+  </div>
+</h3>
+<p></p>
+
+<!-- <div class="row">
+  <%# @users.each do |user| %>
+    <%#= render 'users/user', user: user %>
+  <%# end %>
+</div> -->
+
+
+<%= search_form_for @q do |f| %>
+  <%= f.search_field :email_cont, placeholder: 'email' %>
+  <%#= f.search_field :sign_in_count_eq, placeholder: 'sign in count' %>
+  <%= f.submit %>
+  <%= link_to 'refresh', users_path %>
+<% end %>
+<p></p>
+
+<div class="table-responsive">
+  <table class="table table-bordered table-striped table-sm table-hover">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th><%= sort_link(@q, :email) %></th>
+        <th><%= sort_link(@q, :created_at) %></th>
+        <th><%= 'sign_ins'.humanize %></th>
+        <th><%= 'current_sign_in'.humanize %></th>
+        <th><%= 'last_sign_in'.humanize %></th>
+        <th><%= 'current_ip'.humanize %></th>
+        <th><%= 'last_ip'.humanize %></th>
+        <th>Confirmed?</th>
+        <th>Roles</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.id %></td>
+          <td>
+            <% if user.online? %>
+              <div class="text-success far fa-circle"></div>
+            <% else %>
+              <div class="text-danger far fa-circle"></div>
+            <% end %>
+            <%= link_to user.email, user_path(user) %>
+          </td>
+          <td><%= user.created_at.strftime('%d/%m/%y, %H:%M') %></td>
+          <td><%= user.sign_in_count %></td>
+          <td>
+            <% if user.current_sign_in_at.present? %>
+              <%= user.current_sign_in_at.strftime('%d/%m/%y, %H:%M') %>
+            <% end %>
+          </td>
+          <td>
+            <% if user.last_sign_in_at.present? %>
+              <%= user.last_sign_in_at.strftime('%d/%m/%y - %H:%M') %>
+            <% end %>
+          </td>
+          <td><%= user.current_sign_in_ip %></td>
+          <td><%= user.last_sign_in_ip %></td>
+          <td><%= user.confirmed? %></td>
+          <td>
+            <% user.roles.each do |role| %>
+              <div class="badge alert-info">
+                <%= role.name %>
+              </div>
+            <% end %>
+            <% if policy(user).edit? %>
+              <%= link_to 'Edit role', edit_user_path(user), class: 'btn btn-sm btn-warning' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%== pagy_bootstrap_nav(@pagy) %>

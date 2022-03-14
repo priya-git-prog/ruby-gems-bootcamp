@@ -3,29 +3,48 @@ class CoursesController < ApplicationController
 
   # GET /courses or /courses.json
   def index
-    if params[:title]
-      @courses = Course.where('title ILIKE ?', "%#{params[:title]}%")
-    else
-      @courses = Course.all
-    end
+    # if params[:title]
+    #   @courses = Course.where('title ILIKE ?', "%#{params[:title]}%") # case insensitive
+    # else
+      # @courses = Course.all
+
+      # @q = Course.ransack(params[:q])
+      # @courses = @q.result.includes(:user)
+    # end
+
+    # if current_user.has_role?(:admin)
+      # @ransack_courses = set_global_variables
+      # @courses = @ransack_courses.result.includes(:user)
+    # else
+      # redirect_to root_path, alert: 'You do not have access'
+    # end
+
+    @ransack_courses = set_global_variables
+    # @courses = @ransack_courses.result.includes(:user)
+
+    @pagy, @courses = pagy(@ransack_courses.result.includes(:user))
   end
 
   # GET /courses/1 or /courses/1.json
   def show
+    @lessons = @course.lessons
   end
 
   # GET /courses/new
   def new
     @course = Course.new
+    authorize @course
   end
 
   # GET /courses/1/edit
   def edit
+    authorize @course
   end
 
   # POST /courses or /courses.json
   def create
     @course = Course.new(course_params)
+    authorize @course
     @course.user = current_user
 
     respond_to do |format|
@@ -41,6 +60,7 @@ class CoursesController < ApplicationController
 
   # PATCH/PUT /courses/1 or /courses/1.json
   def update
+    authorize @course
     respond_to do |format|
       if @course.update(course_params)
         format.html { redirect_to @course, notice: "Course was successfully updated." }
@@ -54,6 +74,7 @@ class CoursesController < ApplicationController
 
   # DELETE /courses/1 or /courses/1.json
   def destroy
+    authorize @course
     @course.destroy
     respond_to do |format|
       format.html { redirect_to courses_url, notice: "Course was successfully destroyed." }
@@ -64,11 +85,11 @@ class CoursesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course
-      @course = Course.find(params[:id])
+      @course = Course.friendly.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def course_params
-      params.require(:course).permit(:title, :description)
+      params.require(:course).permit(:title, :description, :short_description, :language, :level, :price)
     end
 end
